@@ -8,39 +8,51 @@
     }
   </style>
 </head>
-  <body>Actionable: <input type="text" id="Actionable" />
+  <body>
+    <input type="file" onchange="loadFile()" />
+    <br />
+    Actionable: <input type="text" id="Actionable" placeholder="Scale 0-1.0, default 0"/>
         <br />
-        Targeted & Accurate: <input type="text" id="Accurate" />
+        Targeted & Accurate: <input type="text" id="Accurate" placeholder="Scale 0-1.0, default 0"/>
         <br />
-        Contextual: <input type="text" id="Contextual" />
+        Contextual: <input type="text" id="Contextual" placeholder="Scale 0-1.0, default 0"/>
         <br />
-        Timely: <input type="text" id="Timely" />
+        Timely: <input type="text" id="Timely" placeholder="Scale 0-1.0, default 0"/>
         <br />
-        Theme Value: <input type="text" id="Theme" />
+        Theme Value: <input type="text" id="Theme" placeholder="Scale 0-1.0, default 0"/>
         <br />
         <a href="javascript:sorting()">sort</a>
         <br /><br />
         <div id="container">
         </div>
         <script>
+          var reader = new FileReader();  
+          function loadFile() {      
+            var file = document.querySelector('input[type=file]').files[0];      
+            reader.addEventListener("load", sorting, false);
+            if (file) {
+              reader.readAsText(file);
+            }      
+          }
           function sorting(){   
             var Actionable= document.getElementById("Actionable").value;
             var Accurate= document.getElementById("Accurate").value;
             var Contextual= document.getElementById("Contextual").value;
             var Timely= document.getElementById("Timely").value;
             var Theme= document.getElementById("Theme").value;
-            d3.csv("Book1.csv", d3.autoType).then((data) => {
+            //var filePath = request.getParameter("theFilePath");
+            //console.log("file",filePath)
+            console.log("reader is",reader)
+            var data = d3.csvParse(reader.result, d3.autoType);
                 data.forEach(d => {
                     d["Result"] = d["Actionable"]*Actionable+d["Targeted & Accurate"]*Accurate+d["Contextual"]*Contextual+d["Timely"]*Timely+d["Theme Value"]*Theme;
                 });
                 data.sort((a, b) => d3.descending(a['Result'], b['Result']));
                 console.log(data)
-                var rows = [{"firstName":"John", "last Name":"Doe", "age":"46"},
-                    {"firstName":"James", "last Name":"Blanc", "age":"24"}];
                     var html = '<table>';
                     html += '<tr>';
                     for( var j in data[0] ) {
-                    html += '<th>' + j + '</th>';
+                      html += '<th>' + j + '</th>';
                     }
                     html += '</tr>';
                     for( var i = 0; i < data.length; i++) {
@@ -51,10 +63,9 @@
                     html += '</tr>';
                     }
                     html += '</table>';
-                    document.getElementById('container').innerHTML = html;  
-            });  
+                    document.getElementById('container').innerHTML = html;   
 
-        }
+            }
         
 
           
