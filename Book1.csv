@@ -1,0 +1,45 @@
+,Notes about context & triggers,Contextual delivery needs,Effort & challenges,Autodesk score,Customer valuescore,Actionable,Targeted & Accurate,Contextual,Timely,Theme Value,Average
+LT-01 Command Recommendation,,During or right after a workflow,e-learning engine already does this.,50/100,52/100,6,3,1,0,3,2.6
+LT-02 Optimizer Recommendation,,as a digest on demandÊ,,50/100,64/100,6,3,3,1,3,3.2
+LT-03 Feature Recommendation by Command Feature,,as a digest on demandÊ,,50/100,64/100,7,2,4,1,3,3.4
+LT-04 Usage by Category (Design Spec),"This report can be displayed to the user whenever they visit a usage dashboard. Unless they explicitly opt out of seeing the insight, it will continue to offer value in an on-demand context.
+It may also be served to the user triggered by some passage of time. For example, a monthly email digest.
+Separate insights should be produced for each product.
+May be helpful to Admins to see time spent for users they manage. (Account Management Portal)",as a digest on demand (can possibly work with account portal mvp),,50/100,36/100,0,5,0,1,3,1.8
+LT-06 Update Recommendation by Command Name,"Note: Recommendations are currently based off of command usage, not by Category or Feature. 
+We need to consider adding the ability to Recommend based on Category as well.  This would make sense for things like Block changes and Quick Measure.","as a digest on demand 
+Should guide user to complete the update workflow via desktop app or direct download",,50/100,40/100,4,2,1,0,3,2
+LT-07 Frustration Detection Tip,"Pick top 10 commands that are susceptible to this pattern (based on past usage analysis).
+Real-time delivery in DWG context is beneficial for this insight.
+This may be valuable in AutoCAD web vs. Account management portal.",,,50/100,64/100,6,3,2,2,3,3.2
+LT-08 Update Recommendation General,"May already be handled by Desktop App
+Should only be displayed if there are no more specific LT-06 insights available for the user",,,50/100,32/100,4,1,0,0,3,1.6
+LT-19 Optimizer Recommendation - Grips,,As a digest on demandÊ,,50/100,64/100,6,3,3,1,3,3.2
+LT-21 Have You Tried Articles,,,,50/100,52/100,6,3,1,0,3,2.6
+LT-22 Non-Fatal Errors,,,,50/100,52/100,6,3,1,1,3,2.8
+P-01 - Recommended Macro,"This insight will be of particular value when delivered in the AutoCAD drafting context.
+ID XTF: Design Specification MVS1
+Curated Macros
+Customer Research:
+Automation user research - May 2021","When delivered in AutoCAD drafting context, this should be triggered when the user performs related activity.
+We should be particularly sensitive to avoid repetitive or annoying trigger events.",,50/100,92/100,10,5,2,3,3,4.6
+P-03 - Most Used Commands Report,,,,50/100,80/100,10,5,2,0,3,4
+P-04 - Command Access Report,,,,50/100,tbd/100,0,0,0,0,0,0
+HP-03A - Application Performance Report,"We noticed:
+Chart system performance (regen rate, memory usage, file open times, etc.) against drawing details (objects, blocks, sheets, X-Refs, etc.)
+We recommend:
+User can identify drawing files that are correlated to performance problems.
+Notes:
+""EG. jp- we noticed that your machine slows on selection of lots of objects you may need to limit the number of grip (sysvar name)
+EG. We notice that you are trying to reference file x from slow network share y. You may want to remove this reference or copy the file locally to improve your file open performance.
+EG. (SMP) We noticed this entity is significantly larger than we'd typically expect, consider these options to improve it and the performance of the DWG",,,50/100,52/100,2,5,1,2,3,2.6
+HP-03B - Drawing Statistics (File) Report,,,,50/100,40/100,4,3,1,1,1,2
+SP-02 System Variable Recommendation,"System variable values set in files the user opens
+System variable values set in product for the user
+System variable values set in product for people who access the same files as the user
+List of system variables than can impact experience between users",,FYI... Not possible today with existing ADP instrumentation. (BS),50/100,64/100,6,3,3,1,3,3.2
+SP-06 - Crash Report,,,,50/100,72/100,8,4,2,1,3,3.6
+DS-05 - Purge Result Report,,,,50/100,tbd/100,0,0,0,0,0,0
+KS-03 Survey,"Should be shown in context of performing the action.Users should be heavily limited to seeing these particular requests, both by time and also per survey. For example, a user should not see more than one survey every, say, 60-90 days.",During or right after a workflow,,80/100,24/100,2,2,0,2,0,1.2
+KS-05 - Forum Activity Report,,,,50/100,tbd/100,0,0,0,0,0,0
+PC-05 - Personal Time Report,,,,50/100,tbd/100,0,0,0,0,0,0

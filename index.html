@@ -1,0 +1,64 @@
+<html>
+<head>
+  <script src="https://d3js.org/d3.v6.min.js">
+  </script>
+  <style>
+    table, th, td {
+        border: 1px solid black;
+    }
+  </style>
+</head>
+  <body>Actionable: <input type="text" id="Actionable" />
+        <br />
+        Targeted & Accurate: <input type="text" id="Accurate" />
+        <br />
+        Contextual: <input type="text" id="Contextual" />
+        <br />
+        Timely: <input type="text" id="Timely" />
+        <br />
+        Theme Value: <input type="text" id="Theme" />
+        <br />
+        <a href="javascript:sorting()">sort</a>
+        <br /><br />
+        <div id="container">
+        </div>
+        <script>
+          function sorting(){   
+            var Actionable= document.getElementById("Actionable").value;
+            var Accurate= document.getElementById("Accurate").value;
+            var Contextual= document.getElementById("Contextual").value;
+            var Timely= document.getElementById("Timely").value;
+            var Theme= document.getElementById("Theme").value;
+            d3.csv("Book1.csv", d3.autoType).then((data) => {
+                data.forEach(d => {
+                    d["Result"] = d["Actionable"]*Actionable+d["Targeted & Accurate"]*Accurate+d["Contextual"]*Contextual+d["Timely"]*Timely+d["Theme Value"]*Theme;
+                });
+                data.sort((a, b) => d3.descending(a['Result'], b['Result']));
+                console.log(data)
+                var rows = [{"firstName":"John", "last Name":"Doe", "age":"46"},
+                    {"firstName":"James", "last Name":"Blanc", "age":"24"}];
+                    var html = '<table>';
+                    html += '<tr>';
+                    for( var j in data[0] ) {
+                    html += '<th>' + j + '</th>';
+                    }
+                    html += '</tr>';
+                    for( var i = 0; i < data.length; i++) {
+                    html += '<tr>';
+                    for( var j in data[i] ) {
+                        html += '<td>' + data[i][j] + '</td>';
+                    }
+                    html += '</tr>';
+                    }
+                    html += '</table>';
+                    document.getElementById('container').innerHTML = html;  
+            });  
+
+        }
+        
+
+          
+
+          </script>
+  </body>
+</html>
