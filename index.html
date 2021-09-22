@@ -6,25 +6,84 @@
     table, th, td {
         border: 1px solid black;
     }
+    #columnInput {
+      padding: 10px;
+      border-radius: 10px;
+      border: solid 2px black;
+      width: 15vw;
+    }
+    #columnSpace input{
+      display:inline-block;
+      padding: 10px;
+      width: 7vw;
+      margin-right: 2vw;
+      border-radius: 10px;
+      border: solid 2px black;
+      float:right;
+    }
+    #leftBar {
+      font-family: Inter;
+      height: 100%;
+      width: 25vw;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: rgb(243, 240, 240);
+      overflow-x: hidden;
+      padding-top: 20px;
+    }
+    #container{
+      margin-left: 25vw;
+    }
+    p {
+      display:inline-block;
+      font-weight: bolder;
+    }
+    button {
+      width: 15vw;
+      padding: 10px;
+      text-align: center;
+      background-color: black;
+      color: white;
+      border-radius: 10px;
+      border: solid 1px black;
+    }
   </style>
 </head>
   <body>
-    <input type="file" onchange="loadFile()" />
+    <div id="leftBar">
+      <div style="margin-left: 3vw;">
+      <h2>WEIGHTING TOOL</h2>
+      <h3>Step 1. Choose the file</h3>
+    <input id="inputFile" type="file" onchange="loadFile()" />
     <br />
-    Actionable: <input type="text" id="Actionable" placeholder="Scale 0-1.0, default 0"/>
+    <br />
+    <h3>Step 2. Add weight</h3>
+    <div id="columnSpace">
+    <p>Actionable: </p></Actionable:><input type="text" id="Actionable" placeholder="Enter 0-1.0"/>
         <br />
-        Targeted & Accurate: <input type="text" id="Accurate" placeholder="Scale 0-1.0, default 0"/>
+        <p>Targeted & Accurate: </p><input type="text" id="Accurate"/>
         <br />
-        Contextual: <input type="text" id="Contextual" placeholder="Scale 0-1.0, default 0"/>
+        <p>Contextual: </p><input type="text" id="Contextual" />
         <br />
-        Timely: <input type="text" id="Timely" placeholder="Scale 0-1.0, default 0"/>
+        <p>Timely: </p><input type="text" id="Timely" />
         <br />
-        Theme Value: <input type="text" id="Theme" placeholder="Scale 0-1.0, default 0"/>
+        <p>Theme Value: </p><input type="text" id="Theme"/>
         <br />
-        <a href="javascript:sorting()">sort</a>
+      </div>
+      <input id= "columnInput" type="text" placeholder="Enter Column Name"/>
+      <br />
+      <br />
+      <button onclick="add()">Add</button>
+      <br />
+      <br />
+        <h3>Step 3. Start sort</h3>
+        <button onclick="sorting()">Sort</button>
         <br /><br />
-        <div id="container">
-        </div>
+      </div>
+      </div>
+      <div id="container"></div>
         <script>
           var reader = new FileReader();  
           function loadFile() {      
@@ -34,18 +93,48 @@
               reader.readAsText(file);
             }      
           }
+          function add() {
+            var columnInput= document.getElementById("columnInput").value;
+            document.getElementById("columnInput").value = "";
+            var html = document.getElementById('columnSpace').innerHTML;
+            html += '<p>'+columnInput+'</p>';
+            html+= '<input type="text" id="'+columnInput+'"/><br/>'
+            document.getElementById('columnSpace').innerHTML = html;   
+          }
           function sorting(){   
-            var Actionable= document.getElementById("Actionable").value;
-            var Accurate= document.getElementById("Accurate").value;
-            var Contextual= document.getElementById("Contextual").value;
-            var Timely= document.getElementById("Timely").value;
-            var Theme= document.getElementById("Theme").value;
+            // var Actionable= document.getElementById("Actionable").value;
+            // var Accurate= document.getElementById("Accurate").value;
+            // var Contextual= document.getElementById("Contextual").value;
+            // var Timely= document.getElementById("Timely").value;
+            // var Theme= document.getElementById("Theme").value;
             //var filePath = request.getParameter("theFilePath");
             //console.log("file",filePath)
-            console.log("reader is",reader)
+            var list=document.getElementById("columnSpace").getElementsByTagName("input");
+            var strData="";
+            for(var i=0;i<list.length && list[i];i++)
+            {
+                  if(list[i].type=="text"&&list[i].id!="subEmail")  
+                  {
+                      strData +=list[i].id+",";          
+                  }
+            }
+            var strList = strData.split(",")
+            console.log("strData is",strList)
             var data = d3.csvParse(reader.result, d3.autoType);
                 data.forEach(d => {
-                    d["Result"] = d["Actionable"]*Actionable+d["Targeted & Accurate"]*Accurate+d["Contextual"]*Contextual+d["Timely"]*Timely+d["Theme Value"]*Theme;
+                  var result = 0
+                  for(var i=0;i<strList.length;i++) {
+                    if(strList[i].length>0 && !isNaN(d[strList[i]])){
+                      var weight = document.getElementById(strList[i]).value;
+                      if(weight==0) {
+                        result += d[strList[i]]
+                      } else {
+                        result += d[strList[i]]*weight
+                      }
+                    }
+                  }
+                  d["Result"] = result;
+                    //d["Result"] = d["Actionable"]*Actionable+d["Targeted & Accurate"]*Accurate+d["Contextual"]*Contextual+d["Timely"]*Timely+d["Theme Value"]*Theme;
                 });
                 data.sort((a, b) => d3.descending(a['Result'], b['Result']));
                 console.log(data)
